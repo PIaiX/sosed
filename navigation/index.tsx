@@ -46,7 +46,7 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarIconStyle: { marginTop: 4 },
-        tabBarLabelStyle: { fontSize: 13, color: '#7A24E7', paddingBottom: 3 },
+        tabBarLabelStyle: { fontSize: 12, color: '#999', paddingBottom: 3 },
         tabBarStyle: { height: 55, position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 4, borderTopWidth: 0 },
         unmountOnBlur: true,
         tabBarShowLabel: true,
@@ -61,79 +61,62 @@ function BottomTabNavigator() {
         options={({ navigation }) => ({
           title: '',
           tabBarLabel: 'Новости',
-          headerLeft: () => <View style={{ padding: 10 }}><Ionicons name="menu-outline" size={30} /></View>,
+          headerLeft: () => <View style={{ paddingHorizontal: 15 }}><Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} /></View>,
+          headerRight: () => <View style={{ padding: 15 }}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></View>,
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
               require('../assets/images/home-active.png')
               :
-              colorScheme == 'dark' ?
-                require('../assets/images/home-white.png')
-                :
-                require('../assets/images/home-noactive.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
+              require('../assets/images/home.png')} style={{ width: 32, height: 32 }} resizeMode="contain" />,
         })}
       />
       <BottomTab.Screen
         name="Home2"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Online',
+          title: 'Сервисы',
           headerShadowVisible: false,
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
-              require('../assets/images/home-active.png')
+              require('../assets/images/service-active.png')
               :
-              colorScheme == 'dark' ?
-                require('../assets/images/home-white.png')
-                :
-                require('../assets/images/home-noactive.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
+              require('../assets/images/service.png')} style={{ width: 25, height: 25 }} resizeMode="contain" />,
         })}
       />
       <BottomTab.Screen
         name="Home3"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Online',
+          title: 'Добавить',
           headerShadowVisible: false,
-          tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
-            focused ?
-              require('../assets/images/home-active.png')
-              :
-              colorScheme == 'dark' ?
-                require('../assets/images/home-white.png')
-                :
-                require('../assets/images/home-noactive.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
+          tabBarLabel: '',
+          tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={require('../assets/images/add.png')} style={{ bottom: 5, width: 55, height: 55 }} resizeMode="contain" />,
         })}
       />
       <BottomTab.Screen
         name="Home4"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Online',
+          title: 'Бонусы',
           headerShadowVisible: false,
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
-              require('../assets/images/home-active.png')
+              require('../assets/images/points-active.png')
               :
-              colorScheme == 'dark' ?
-                require('../assets/images/home-white.png')
-                :
-                require('../assets/images/home-noactive.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
+              require('../assets/images/points.png')} style={{ width: 25, height: 25 }} resizeMode="contain" />,
         })}
       />
       <BottomTab.Screen
         name="Home5"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Online',
+          title: 'Карта',
           headerShadowVisible: false,
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
-              require('../assets/images/home-active.png')
+              require('../assets/images/map-active.png')
               :
-              colorScheme == 'dark' ?
-                require('../assets/images/home-white.png')
-                :
-                require('../assets/images/home-noactive.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
+              require('../assets/images/map.png')} style={{ width: 23, height: 23 }} resizeMode="contain" />,
         })}
       />
     </BottomTab.Navigator>
