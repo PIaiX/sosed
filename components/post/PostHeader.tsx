@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingBottom: 10
   },
   headerLeft: {
     paddingRight: 10

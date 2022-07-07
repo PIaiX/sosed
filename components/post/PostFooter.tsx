@@ -9,16 +9,16 @@ export default function PostFooter(props: any) {
   return <View style={styles.footer}>
     <View style={styles.footerLeft}>
       <View style={styles.box}>
-        <Ionicons name="heart-outline" color="#444" size={28} />
+        <Ionicons name="heart-outline" color="#444" size={25} />
         <Text style={styles.boxText}>{item.likesCount}</Text>
       </View>
       <View style={styles.box}>
-        <Ionicons name="chatbox-outline" color="#444" size={28} />
+        <Ionicons name="chatbox-outline" color="#444" size={25} />
         <Text style={styles.boxText}>{item.commentsCount}</Text>
       </View>
     </View>
     <View>
-      <Ionicons name="bookmark-outline" color="#444" size={28} />
+      <Ionicons name="bookmark-outline" color="#444" size={25} />
     </View>
   </View>
 }
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 15
+    paddingBottom: 15,
+    paddingTop: 10,
   },
   footerLeft: {
     flexDirection: 'row',

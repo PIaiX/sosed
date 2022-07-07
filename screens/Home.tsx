@@ -141,6 +141,8 @@ export default function Home(props: any) {
   const itemPost = ({ item, index }) => {
     if (item.type == 1 || !item.type) {
       return <PostDefault key={index} item={item} />
+    } else if (item.type == 2) {
+      return <PostQuiz key={index} item={item} />
     }
   }
 

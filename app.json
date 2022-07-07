@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "sosed",
+    "name": "Привет, сосед!",
     "slug": "sosed",
     "version": "0.0.2",
     "orientation": "portrait",
@@ -8,8 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
