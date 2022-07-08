@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useColorScheme, Image, View, TouchableOpacity } from 'react-native';
+import { useColorScheme, Image, View, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import Dialogs from '../screens/Dialogs';
@@ -31,6 +31,7 @@ export default function Navigation() {
 
 const Stack = createNativeStackNavigator();
 function RootNavigator() {
+  const navigation: any = useNavigation();
   return (
     <Stack.Navigator>
       <Stack.Group
@@ -39,12 +40,21 @@ function RootNavigator() {
           animationTypeForReplace: 'push',
           animation: 'slide_from_right',
         }}>
-        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{
+          title: '',
+          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
+          headerLeft: () => <View><Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} /></View>,
+          headerRight: () => <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Dialogs')}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></TouchableOpacity>,
+        }} />
         <Stack.Screen name="Dialogs" component={Dialogs} options={{
-          title: 'Чаты', headerShown: false,
-          headerLeft: () => <View style={{ paddingHorizontal: 15 }}>
-            <Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} />
-          </View>,
+          title: '',
+          headerTintColor: '#fff',
+          headerBackTitle: 'назад',
+          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
         }} />
       </Stack.Group>
     </Stack.Navigator>
@@ -75,8 +85,6 @@ function BottomTabNavigator() {
         options={({ navigation }) => ({
           title: '',
           tabBarLabel: 'Новости',
-          headerLeft: () => <View style={{ paddingHorizontal: 15 }}><Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} /></View>,
-          headerRight: () => <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Dialogs')} style={{ padding: 15 }}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></TouchableOpacity>,
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
               require('../assets/images/home-active.png')

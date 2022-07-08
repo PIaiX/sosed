@@ -1,125 +1,155 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, Dimensions, ScrollView, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import Button from '../components/Button';
 import PostDefault from '../components/post/PostDefault';
 import PostAd from '../components/post/PostAd';
 import PostQuiz from '../components/post/PostQuiz';
+import DialogModal from '../components/DialogModal';
 
 const { width, height } = Dimensions.get('window')
 
 export default function Dialogs(props: any) {
   const navigation = useNavigation();
   const [category, setCategory] = useState(0);
-  const [quiz, setQuiz] = useState<any>([
+
+  const [show, setShow] = useState(false);
+
+  const [searchText, setSearchText] = useState('');
+  const [dialogs, setDialogs] = useState([
     {
       id: 0,
-      image: require('../assets/images/quiz.png'),
-      title: 'События города',
-      checked: false
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
     },
-    {
-      id: 1,
-      image: require('../assets/images/quiz.png'),
-      title: 'Волонтерство',
-      checked: true
-    },
-    {
-      id: 2,
-      image: require('../assets/images/quiz.png'),
-      title: 'События города',
-      checked: false
-    },
-    {
-      id: 3,
-      image: require('../assets/images/quiz.png'),
-      title: 'События города',
-      checked: false
-    },
-    {
-      id: 4,
-      image: require('../assets/images/quiz.png'),
-      title: 'События города',
-      checked: false
-    }
-  ]);
-
-  const [posts, setPosts] = useState([
     {
       id: 0,
-      type: 1,
-      image: require('../assets/images/avatar.png'),
-      media: require('../assets/images/postimage.png'),
-      name: 'Иван Геронов',
-      city: 'Казань',
-      category: 'Безопасность',
-      text: 'Дорогие соседи, сегодня в нашем районе по адресу Исаакиевская пл., 1,  открылась невероятная выставка шедевров скульптора Микеланджело. Всем обязательно советую пойти! Вход стоит 500 рублей за человека, но оно явно того стоит!!!',
-      date: '17 декабря в 21:30',
-      likesCount: 25,
-      commentsCount: 100,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
     },
     {
-      id: 1,
-      type: 2,
-      image: require('../assets/images/avatar.png'),
-      name: 'Иван Геронов',
-      city: 'Казань',
-      date: '17 декабря в 21:30',
-      likesCount: 25,
-      commentsCount: 100,
-
-      quizId: 0,
-      quizTitle: 'На сколько вас устраивает чистота воздуха в нашем городе? Выберите один вариант ответа',
-      quizCategory: 'Экология',
-      quizList: [
-        {
-          id: 0,
-          text: 'Отлично',
-          value: 132,
-          procent: 30,
-          checked: true
-        },
-        {
-          id: 1,
-          text: 'Нормально',
-          value: 332,
-          procent: 50,
-          checked: false
-        },
-        {
-          id: 2,
-          text: 'Плохо',
-          value: 65,
-          procent: 20,
-          checked: false
-        }
-      ]
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
     },
     {
-      id: 2,
-      type: 3,
-      image: require('../assets/images/avatar.png'),
-      name: 'Иван Геронов',
-      city: 'Казань',
-      date: '17 декабря в 21:30',
-      likesCount: 25,
-      commentsCount: 100,
-
-      adTitle: 'Шумная вечеринка на крыше небоскрёба'
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
     },
     {
-      id: 4,
-      type: 1,
-      image: require('../assets/images/avatar.png'),
-      name: 'Иван Геронов',
-      city: 'Казань',
-      text: 'Дорогие соседи, сегодня в нашем районе по адресу Исаакиевская пл., 1,  открылась невероятная выставка шедевров скульптора Микеланджело. Всем обязательно советую пойти! Вход стоит 500 рублей за человека, но оно явно того стоит!!!',
-      date: '17 декабря в 21:30',
-      likesCount: 25,
-      commentsCount: 100,
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 0,
+      firstName: 'Георгий',
+      lastName: 'Норий',
+      newMessagesCount: 10,
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
     }
   ]);
 
@@ -127,58 +157,43 @@ export default function Dialogs(props: any) {
 
   }, [])
 
-  const itemPoint = ({ item }) => {
-    return <TouchableOpacity activeOpacity={0.8} style={styles.point}>
-      <LinearGradient
-        colors={['#6A2BA9', '#9532C7']}
-        start={[0, 1]}
-        end={[1, 0]}
-        style={styles.pointBackground}>
-        <View style={styles.pointContent}>
-          <View style={styles.pointHeader}>
-            <View>
-              <Ionicons name="gift-outline" size={20} color={Colors.iconColor} />
-            </View>
-            <View>
-              <Ionicons name="arrow-forward-outline" size={20} color="white" />
-            </View>
+  const Item = ({ item }: any) => <TouchableOpacity
+    activeOpacity={0.6}
+    onPress={() => console.log(124)}
+    style={styles.itemBox}>
+    <View style={styles.item}>
+      <View>
+        <Image
+          source={item.miniature ? { uri: URL + item.miniature } : require('../assets/images/avatar.png')}
+          style={styles.dialogPhoto}
+        />
+      </View>
+      <View style={styles.borderBottom}>
+        <View style={styles.dialogNameBox}>
+          <View>
+            <Text style={styles.dialogName}>{item.firstName && item.lastName ? item.firstName + ' ' + item.lastName : item.nickname}</Text>
           </View>
-          <Text style={styles.pointTitle}>120</Text>
-          <Text style={styles.pointSubTitle}>Ваши баллы</Text>
+          <View style={styles.dialogNameBoxRight}>
+            {item.lastMessage && item.lastMessage.isViewed ? <Ionicons name="checkmark-done-sharp" size={18} color={Colors.activeText} /> : <Ionicons name="checkmark-sharp" size={18} color={Colors.activeText} />}
+            <Text style={styles.dialogNameBoxRightTime}>{item.lastMessage && item.lastMessage.timeForUser ? item.lastMessage.timeForUser : '00:00'}</Text>
+          </View>
         </View>
-      </LinearGradient>
-    </TouchableOpacity>
-  }
-
-  const itemQuiz = ({ item }) => {
-    return <TouchableOpacity activeOpacity={0.8} style={styles.quiz} onPress={
-      () => {
-        let newQuiz = quiz.map((e: any) => {
-          if (e.id === item.id) {
-            e.checked = !item.checked;
+        <View style={styles.dialogNameBox}>
+          {item.lastMessage && item.lastMessage.text.length > 0 &&
+            <View>
+              <Text style={styles.dialogSubTitle}>{item.lastMessage.text}</Text>
+            </View>
           }
-          return e;
-        });
-        setQuiz(newQuiz);
-      }}>
-      <ImageBackground style={styles.quizBackgroundImage} source={item.image}>
-        <Ionicons name={item.checked ? "checkmark-circle-sharp" : "ellipse-outline"} style={styles.checkbox} size={25} color={item.checked ? 'white' : 'rgba(255,255,255,0.6)'} />
-        <View style={styles.quizContent}>
-          <Text style={styles.quizTitle}>{item.title}</Text>
+          {item.newMessagesCount && item.newMessagesCount > 0 &&
+            <View style={styles.dialogNameBoxRight}>
+              <Text style={styles.numNew}>{item.newMessagesCount}</Text>
+            </View>
+          }
         </View>
-      </ImageBackground>
-    </TouchableOpacity>
-  }
+      </View>
+    </View>
+  </TouchableOpacity>
 
-  const itemPost = ({ item, index }) => {
-    if (item.type == 1 || !item.type) {
-      return <PostDefault key={index} item={item} />
-    } else if (item.type == 2) {
-      return <PostQuiz key={index} item={item} />
-    } else if (item.type == 3) {
-      return <PostAd key={index} item={item} />
-    }
-  }
 
   return <ScrollView showsVerticalScrollIndicator={false} style={styles.background}>
     <LinearGradient
@@ -186,57 +201,39 @@ export default function Dialogs(props: any) {
       start={[0, 1]}
       end={[1, 0]}
       style={styles.header}>
-      <View style={styles.tabs}>
-        <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Город</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Район</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setCategory(2)} style={[styles.tab, category === 2 && styles.tabActive]}><Text style={styles.tabText}>Дом</Text></TouchableOpacity>
-      </View>
-      <View style={styles.content}>
-        <View style={styles.filter}>
-          <View>
-            <Button title="Управляющая компания" icon="arrow-forward-outline" iconSize={20} />
-          </View>
-          <View>
-            <TouchableOpacity style={styles.select}><Text style={styles.selectText}>Сортировка</Text><Ionicons name="chevron-down-outline" color="white" size={18} /></TouchableOpacity>
-          </View>
+      <Text style={styles.headerTitle}>Чаты</Text>
+      <View style={styles.search}>
+        <View style={styles.searchBox}>
+          <Ionicons style={styles.searchIcon} name="search-outline" size={20} color="rgba(255,255,255,0.8)" />
+          <TextInput style={styles.searchInput} maxLength={250} placeholderTextColor="rgba(255,255,255,0.8)" placeholder="Поиск" value={searchText} onChangeText={(text) => setSearchText(text)} />
+        </View>
+        <View style={styles.searchBox2}>
+          <TouchableOpacity onPress={() => setShow(true)}><Ionicons name="settings-outline" size={25} color="white" /></TouchableOpacity>
         </View>
       </View>
-      <View style={styles.quizBottom}>
-        <FlatList
-          data={quiz}
-          horizontal
-          contentContainerStyle={styles.quizContainer}
-          renderItem={itemQuiz}
-          ListHeaderComponent={itemPoint}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+      <View style={styles.tabs}>
+        <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Важное</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Общие</Text></TouchableOpacity>
       </View>
     </LinearGradient>
     <View style={styles.container}>
       {
-        !category || category === 0 ?
-          <FlatList
-            data={posts}
-            renderItem={itemPost}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
-          : category == 1 ?
-            <View style={styles.contentInfo}>
-              <Text>Вам не доступен раздел “Новости Района”, поскольку Вы не добавили Дом.
-                Чтобы увидеть этот раздел заполните информацию о профиле либо <Text style={{ color: Colors.activeText }}>добавьте свой дом</Text>.</Text>
-              <View style={styles.contentInfoGift}><Ionicons name="gift-outline" size={30} color={Colors.activeText} /><Text style={styles.contentInfoGiftText}>Вы получите 50 баллов</Text></View>
-            </View>
-            : category == 2 &&
-            <View style={styles.contentInfo}>
-              <Text>Вам не доступен раздел “Новости Дома”, поскольку Вы не добавили Дом.
-                Чтобы увидеть этот раздел заполните информацию о профиле либо <Text style={{ color: Colors.activeText }}>добавьте свой дом</Text>.</Text>
-              <View style={styles.contentInfoGift}><Ionicons name="gift-outline" size={30} color={Colors.activeText} /><Text style={styles.contentInfoGiftText}>Вы получите 50 баллов</Text></View>
-            </View>
-
+        <FlatList
+          data={dialogs}
+          renderItem={Item}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
       }
     </View>
+    <DialogModal
+      show={show}
+      setShow={(e: boolean) => setShow(e)}
+      text="Вы точно хотите покинуть группу Чат соседей и удалить ее?"
+      buttons={[
+        { text: 'Отмена', onPress: () => setShow(!show) },
+        { text: 'Покинуть беседу', color: 'red', onPress: () => setShow(!show) }
+      ]} />
   </ScrollView>
 }
 
@@ -252,121 +249,123 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 15,
   },
-  contentInfo: {
-    paddingHorizontal: 15,
-  },
-  contentInfoGift: {
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  contentInfoGiftText: {
-    fontSize: 17,
-    paddingLeft: 10
-  },
   header: {
     backgroundColor: '#C697FF',
     paddingTop: 70,
+    elevation: 3,
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    alignSelf: 'center'
   },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
   tab: {
-    marginHorizontal: 15,
+    flex: 1,
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 2,
+    borderBottomWidth: 3,
     borderBottomColor: 'transparent'
   },
   tabActive: {
-    borderBottomWidth: 2,
+    borderBottomWidth: 3,
     borderBottomColor: '#7A24E7'
   },
   tabText: {
     color: '#fff',
+    fontWeight: 'bold',
     fontSize: 16,
   },
-  filter: {
-    paddingVertical: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  select: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  selectText: {
-    color: "#fff"
-  },
-  quizBottom: {
-    paddingBottom: 15
-  },
-  quizContainer: {
-    paddingHorizontal: 15
-  },
-  quiz: {
-    width: width / 3 - 24,
-    marginRight: 8,
-  },
-  quizBackgroundImage: {
-    borderRadius: 8,
-    overflow: 'hidden',
-    height: width / 3 - 24,
-    justifyContent: 'flex-end'
-  },
-  quizContent: {
-    paddingHorizontal: 5,
+  search: {
+    paddingHorizontal: 20,
     paddingVertical: 10,
-    alignSelf: 'center',
-    textAlign: 'center'
-  },
-  quizTitle: {
-    color: 'white',
-    fontSize: 13,
-    alignSelf: 'center',
-    textAlign: 'center'
-  },
-  checkbox: {
-    position: 'absolute',
-    top: 5,
-    right: 5
-  },
-  point: {
-    width: width / 3 - 24,
-    marginRight: 8,
-  },
-  pointBackground: {
-    borderRadius: 8,
-    overflow: 'hidden',
-    height: width / 3 - 24,
-    justifyContent: 'flex-end'
-  },
-  pointHeader: {
-    height: 25,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
-  pointContent: {
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    alignSelf: 'center',
-    textAlign: 'center'
-  },
-  pointTitle: {
-    color: 'white',
-    fontSize: 28,
-    fontWeight: 'bold',
+  searchBox: {
     flex: 1,
-    alignSelf: 'center',
-    textAlign: 'center'
   },
-  pointSubTitle: {
-    color: 'white',
+  searchBox2: {
+    paddingLeft: 15
+  },
+  searchInput: {
+    width: '100%',
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    color: "#fff",
+    fontSize: 16,
+    borderRadius: 40,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    paddingLeft: 45
+  },
+  searchIcon: {
+    position: 'absolute',
+    left: 15,
+    top: 11
+  },
+
+
+
+  itemBox: {
+    flex: 1,
+    paddingVertical: 6,
+    paddingLeft: 15,
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  dialogNameBox: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between'
+  },
+  dialogNameBoxRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    paddingRight: 15,
+  },
+  dialogNameBoxRightTime: {
     fontSize: 13,
-    alignSelf: 'center',
-    textAlign: 'center'
-  }
+    color: '#999',
+    marginLeft: 5
+  },
+  numNew: {
+    paddingVertical: 2,
+    paddingHorizontal: 7,
+    fontSize: 12,
+    color: '#fff',
+    borderRadius: 20,
+    backgroundColor: Colors.iconColor
+  },
+  dialogPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 15,
+    resizeMode: 'cover',
+    backgroundColor: Colors.background,
+    marginRight: 15
+  },
+  borderBottom: {
+    paddingBottom: 12,
+    flex: 1,
+  },
+  dialogName: {
+    fontSize: 17,
+    marginBottom: 4
+  },
+  dialogSubTitle: {
+    fontSize: 14,
+    color: '#999'
+  },
 });

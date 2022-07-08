@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, ImageBackground, Dimensions, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,11 +9,15 @@ import Button from '../components/Button';
 import PostDefault from '../components/post/PostDefault';
 import PostAd from '../components/post/PostAd';
 import PostQuiz from '../components/post/PostQuiz';
+import DialogModal from '../components/DialogModal';
 
 const { width, height } = Dimensions.get('window')
 
 export default function Home(props: any) {
   const navigation = useNavigation();
+
+  const [show, setShow] = useState(true);
+
   const [category, setCategory] = useState(0);
   const [quiz, setQuiz] = useState<any>([
     {
@@ -238,6 +242,18 @@ export default function Home(props: any) {
 
       }
     </View>
+    <DialogModal
+      show={show}
+      setShow={(e: boolean) => setShow(e)}
+      buttons={[
+        { text: 'ОК', onPress: () => setShow(!show) },
+        { text: '+220 быллов', onPress: () => setShow(!show) }
+      ]}>
+      <Image source={require('../assets/images/reg-point.png')} resizeMode="contain" style={{ height: 200, width: '70%', alignSelf: 'center' }} />
+      <Text style={{ fontSize: 18 }}>
+        <Text style={{ color: Colors.activeText }}>Поздравляем!</Text>{'\n'}Вы прошли регистрацию и получили <Text style={{ color: Colors.activeText }}>120</Text> баллов!
+      </Text>
+    </DialogModal>
   </ScrollView>
 }
 
