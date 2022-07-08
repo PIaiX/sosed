@@ -8,8 +8,10 @@ export default function PostDefault(props: any) {
 
   return <View style={styles.container}>
     <PostHeader item={item} />
-    {item.text && item.text.length > 0 && <View><Text style={styles.text}>{item.text}</Text></View>}
-    {item.media && <View><Image style={styles.media} source={item.media} /></View>}
+    <View style={styles.content}>
+      {item.text && item.text.length > 0 && <View><Text style={styles.text}>{item.text}</Text></View>}
+      {item.media && <View><Image style={styles.media} source={item.media} /></View>}
+    </View>
     <PostFooter item={item} />
   </View>
 }
@@ -17,6 +19,9 @@ export default function PostDefault(props: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  content: {
+    paddingHorizontal: 15
   },
   media: {
     resizeMode: 'cover',

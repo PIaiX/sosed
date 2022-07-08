@@ -10,16 +10,9 @@ export default {
     backgroundColor: '#C697FF',
     backgroundColor2: '#B2B5FF',
   },
-  light: {
-    text: '#111111',
-    borderColor: '#eee',
-    activeText: tintColorLight,
-    background: '#ffffff',
-  },
-  dark: {
-    text: '#ffffff',
-    borderColor: 'rgba(255,255,255,0.2)',
-    activeText: tintColorLight,
-    background: '#131313',
-  }
+  iconColor: '#FF6C19',
+  activeText: '#7A24E7',
+  text: '#111111',
+  background: '#ffffff',
+  borderColor: '#eee',
 };

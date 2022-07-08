@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, ImageBackground, Dimensions, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import Button from '../components/Button';
@@ -12,7 +11,7 @@ import PostQuiz from '../components/post/PostQuiz';
 
 const { width, height } = Dimensions.get('window')
 
-export default function Home(props: any) {
+export default function Dialogs(props: any) {
   const navigation = useNavigation();
   const [category, setCategory] = useState(0);
   const [quiz, setQuiz] = useState<any>([
