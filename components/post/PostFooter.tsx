@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState, memo } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../../constants/Colors';
 
-export default function PostFooter(props: any) {
+export default memo(function PostFooter(props: any) {
   const { item } = props;
+  const [like, setLike] = useState(false);
+  const [bookmark, setBookmark] = useState(false);
 
   return <View style={styles.footer}>
     <View style={styles.footerLeft}>
-      <View style={styles.box}>
-        <Ionicons name="heart-outline" color="#444" size={25} />
+      <TouchableOpacity activeOpacity={0.8} onPress={() => setLike(!like)} style={styles.box}>
+        <Ionicons name={like ? "heart" : "heart-outline"} color={like ? Colors.likeActive : Colors.like} size={25} />
         <Text style={styles.boxText}>{item.likesCount}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.box}>
         <Ionicons name="chatbox-outline" color="#444" size={25} />
         <Text style={styles.boxText}>{item.commentsCount}</Text>
       </View>
     </View>
-    <View>
-      <Ionicons name="bookmark-outline" color="#444" size={25} />
-    </View>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => setBookmark(!bookmark)}>
+      <Ionicons name={bookmark ? "bookmark" : "bookmark-outline"} color={bookmark ? Colors.bookmarkActive : Colors.bookmark} size={25} />
+    </TouchableOpacity>
   </View>
-}
+});
 
 const styles = StyleSheet.create({
   footer: {

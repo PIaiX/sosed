@@ -1,12 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Text, Image, Modal, TouchableOpacity, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import OptionsMenu from '../OptionsMenu';
 
-export default function PostHeader(props: any) {
+export default memo(function PostHeader(props: any) {
   const { item } = props;
   const [show, setShow] = useState(false);
+  var options = [];
+  if (item.type == 2) {
+    options = [
+      { title: 'Отменить голос', type: 'active', icon: 'close-circle-outline', onOptionPress: () => console.log('тест') },
+      { title: 'Скопировать ссылку', icon: 'copy-outline', onOptionPress: () => console.log('тест') },
+      { title: 'Скрыть публикацию', icon: 'eye-off-outline' },
+      { title: 'Пожаловаться', type: 'delete', icon: 'alert-circle-outline', onPress: '' }
+    ]
+  } else {
+    options = [
+      { title: 'Скопировать ссылку', icon: 'copy-outline', onOptionPress: () => console.log('тест') },
+      { title: 'Скрыть публикацию', icon: 'eye-off-outline' },
+      { title: 'Пожаловаться', type: 'delete', icon: 'alert-circle-outline', onPress: '' }
+    ]
+  }
 
   return <>
     <View style={styles.header}>
@@ -27,31 +43,9 @@ export default function PostHeader(props: any) {
         </View>
       </View>
     </View>
-    <Modal
-      transparent={true}
-      animationType="slide"
-      visible={show}
-      onRequestClose={() => setShow(!show)}
-    >
-      <Pressable style={styles.menuFon} onPress={() => setShow(!show)}>
-        <View style={styles.menuBox}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.link}>
-            <Ionicons name="copy-outline" size={22} style={styles.icon} />
-            <Text style={styles.linkText}>Скопировать ссылку</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={styles.link}>
-            <Ionicons name="eye-off-outline" size={22} style={styles.icon} />
-            <Text style={styles.linkText}>Скрыть публикацию</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={styles.link}>
-            <Ionicons name="alert-circle-outline" size={22} style={styles.reportIcon} />
-            <Text style={styles.reportText}>Пожаловаться</Text>
-          </TouchableOpacity>
-        </View>
-      </Pressable>
-    </Modal>
+    <OptionsMenu show={show} type="top" data={options} onClose={(item: any) => setShow(!show)} />
   </>
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -95,45 +89,4 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45
   },
-  modal: {
-    flex: 1,
-    borderBottomColor: '#fff',
-  },
-  menuFon: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  menuBox: {
-    backgroundColor: 'white',
-    width: '100%',
-    maxHeight: '50%',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    elevation: 2,
-    padding: 12
-  },
-
-  link: {
-    padding: 10,
-    borderRadius: 8,
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  linkText: {
-    fontSize: 16,
-  },
-  reportText: {
-    color: '#f93a54'
-  },
-  icon: {
-    marginRight: 10,
-    color: Colors.text
-  },
-  reportIcon: {
-    marginRight: 10,
-    color: '#f93a54'
-  }
 });

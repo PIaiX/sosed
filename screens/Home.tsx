@@ -100,6 +100,13 @@ export default function Home(props: any) {
           value: 65,
           procent: 20,
           checked: false
+        },
+        {
+          id: 2,
+          text: 'Очень плохо',
+          value: 0,
+          procent: 0,
+          checked: false
         }
       ]
     },
@@ -186,11 +193,7 @@ export default function Home(props: any) {
   }
 
   return <ScrollView showsVerticalScrollIndicator={false} style={styles.background}>
-    <LinearGradient
-      colors={[Colors.header.backgroundColor, Colors.header.backgroundColor2]}
-      start={[0, 1]}
-      end={[1, 0]}
-      style={styles.header}>
+    <ImageBackground source={require('../assets/images/background-header.png')} >
       <View style={styles.tabs}>
         <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Город</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Район</Text></TouchableOpacity>
@@ -217,7 +220,7 @@ export default function Home(props: any) {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-    </LinearGradient>
+    </ImageBackground>
     <View style={styles.container}>
       {
         !category || category === 0 ?
@@ -244,10 +247,11 @@ export default function Home(props: any) {
     </View>
     <DialogModal
       show={show}
+      close={true}
       setShow={(e: boolean) => setShow(e)}
       buttons={[
         { text: 'ОК', onPress: () => setShow(!show) },
-        { text: '+220 быллов', onPress: () => setShow(!show) }
+        { text: '+120 быллов', onPress: () => setShow(!show) }
       ]}>
       <Image source={require('../assets/images/reg-point.png')} resizeMode="contain" style={{ height: 200, width: '70%', alignSelf: 'center' }} />
       <Text style={{ fontSize: 18 }}>
@@ -280,10 +284,6 @@ const styles = StyleSheet.create({
   contentInfoGiftText: {
     fontSize: 17,
     paddingLeft: 10
-  },
-  header: {
-    backgroundColor: '#C697FF',
-    paddingTop: 70,
   },
   tabs: {
     flexDirection: 'row',

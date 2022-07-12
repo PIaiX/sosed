@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useColorScheme, Image, View, TouchableOpacity, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme, Image, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import Home from '../screens/Home';
 import Dialogs from '../screens/Dialogs';
+import Chat from '../screens/Chat';
 
-const config = {
-  screens: {
-    Chat: 'feed/:sort',
-    Profile: 'user',
-  },
-};
+import PostAdScreen from '../screens/post/PostAdScreen';
 
-const linking = {
-  prefixes: ['https://mychat.com', 'mychat://'],
-  config,
-};
+import { StatusBar } from 'expo-status-bar';
+
 export default function Navigation() {
   const colorScheme = useColorScheme();
   return (
     <NavigationContainer
-      linking={linking}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar style='light' />
       <RootNavigator />
     </NavigationContainer>
   );
@@ -38,12 +32,11 @@ function RootNavigator() {
         screenOptions={{
           presentation: 'modal',
           animationTypeForReplace: 'push',
-          animation: 'slide_from_right',
+          animation: 'fade',
         }}>
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{
           title: '',
-          headerShown: true,
-          headerTransparent: true,
+          headerBackground: () => <ImageBackground style={{ height: 415, width: '100%' }} source={require('../assets/images/background-header.png')} />,
           headerShadowVisible: false,
           headerLeft: () => <View><Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} /></View>,
           headerRight: () => <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Dialogs')}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></TouchableOpacity>,
@@ -52,7 +45,20 @@ function RootNavigator() {
           title: '',
           headerTintColor: '#fff',
           headerBackTitle: 'назад',
-          headerShown: true,
+          headerTransparent: true,
+          headerShadowVisible: false,
+        }} />
+        <Stack.Screen name="Chat" component={Chat} options={{
+          title: '',
+          headerTintColor: '#fff',
+          headerBackTitle: 'назад',
+          headerTransparent: true,
+          headerShadowVisible: false,
+        }} />
+        <Stack.Screen name="PostAdScreen" component={PostAdScreen} options={{
+          title: '',
+          headerTintColor: '#fff',
+          headerBackTitle: 'назад',
           headerTransparent: true,
           headerShadowVisible: false,
         }} />

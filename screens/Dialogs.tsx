@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, Dimensions, ScrollView, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,11 +10,12 @@ import PostDefault from '../components/post/PostDefault';
 import PostAd from '../components/post/PostAd';
 import PostQuiz from '../components/post/PostQuiz';
 import DialogModal from '../components/DialogModal';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window')
 
 export default function Dialogs(props: any) {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   const [category, setCategory] = useState(0);
 
   const [show, setShow] = useState(false);
@@ -23,184 +24,65 @@ export default function Dialogs(props: any) {
   const [dialogs, setDialogs] = useState([
     {
       id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
       newMessagesCount: 10,
+      user: {
+        id: 0,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
       lastMessage: {
         text: 'Прости, опаздываю',
         timeForUser: '23:49',
       }
     },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    },
-    {
-      id: 0,
-      firstName: 'Георгий',
-      lastName: 'Норий',
-      newMessagesCount: 10,
-      lastMessage: {
-        text: 'Прости, опаздываю',
-        timeForUser: '23:49',
-      }
-    }
   ]);
 
   useEffect(() => {
 
   }, [])
 
-  const Item = ({ item }: any) => <TouchableOpacity
-    activeOpacity={0.6}
-    onPress={() => console.log(124)}
-    style={styles.itemBox}>
-    <View style={styles.item}>
-      <View>
-        <Image
-          source={item.miniature ? { uri: URL + item.miniature } : require('../assets/images/avatar.png')}
-          style={styles.dialogPhoto}
-        />
-      </View>
-      <View style={styles.borderBottom}>
-        <View style={styles.dialogNameBox}>
-          <View>
-            <Text style={styles.dialogName}>{item.firstName && item.lastName ? item.firstName + ' ' + item.lastName : item.nickname}</Text>
-          </View>
-          <View style={styles.dialogNameBoxRight}>
-            {item.lastMessage && item.lastMessage.isViewed ? <Ionicons name="checkmark-done-sharp" size={18} color={Colors.activeText} /> : <Ionicons name="checkmark-sharp" size={18} color={Colors.activeText} />}
-            <Text style={styles.dialogNameBoxRightTime}>{item.lastMessage && item.lastMessage.timeForUser ? item.lastMessage.timeForUser : '00:00'}</Text>
-          </View>
+  const Item = ({ item }: any) => <View key={item.id}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={() => navigation.navigate('Chat', item)}
+      style={styles.itemBox}>
+      <View style={styles.item}>
+        <View>
+          <Image
+            source={item.user.miniature ? item.user.miniature : require('../assets/images/avatar.png')}
+            style={styles.dialogPhoto}
+          />
         </View>
-        <View style={styles.dialogNameBox}>
-          {item.lastMessage && item.lastMessage.text.length > 0 &&
+        <View style={styles.borderBottom}>
+          <View style={styles.dialogNameBox}>
             <View>
-              <Text style={styles.dialogSubTitle}>{item.lastMessage.text}</Text>
+              <Text style={styles.dialogName}>{item.user.firstName && item.user.lastName ? item.user.firstName + ' ' + item.user.lastName : item.user.nickname}</Text>
             </View>
-          }
-          {item.newMessagesCount && item.newMessagesCount > 0 &&
             <View style={styles.dialogNameBoxRight}>
-              <Text style={styles.numNew}>{item.newMessagesCount}</Text>
+              {item.lastMessage && item.lastMessage.isViewed ? <Ionicons name="checkmark-done-sharp" size={18} color={Colors.activeText} /> : <Ionicons name="checkmark-sharp" size={18} color={Colors.activeText} />}
+              <Text style={styles.dialogNameBoxRightTime}>{item.lastMessage && item.lastMessage.timeForUser ? item.lastMessage.timeForUser : '00:00'}</Text>
             </View>
-          }
+          </View>
+          <View style={styles.dialogNameBox}>
+            {item.lastMessage && item.lastMessage.text.length > 0 &&
+              <View>
+                <Text style={styles.dialogSubTitle}>{item.lastMessage.text}</Text>
+              </View>
+            }
+            {item.newMessagesCount && item.newMessagesCount > 0 &&
+              <View style={styles.dialogNameBoxRight}>
+                <Text style={styles.numNew}>{item.newMessagesCount}</Text>
+              </View>
+            }
+          </View>
         </View>
       </View>
-    </View>
-  </TouchableOpacity>
+    </TouchableOpacity>
+  </View>
 
-
-  return <ScrollView showsVerticalScrollIndicator={false} style={styles.background}>
-    <LinearGradient
-      colors={[Colors.header.backgroundColor, Colors.header.backgroundColor2]}
-      start={[0, 1]}
-      end={[1, 0]}
-      style={styles.header}>
+  return <View style={styles.background}>
+    <ImageBackground style={styles.header} source={require('../assets/images/background-header.png')} >
       <Text style={styles.headerTitle}>Чаты</Text>
       <View style={styles.search}>
         <View style={styles.searchBox}>
@@ -215,7 +97,7 @@ export default function Dialogs(props: any) {
         <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Важное</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Общие</Text></TouchableOpacity>
       </View>
-    </LinearGradient>
+    </ImageBackground>
     <View style={styles.container}>
       {
         <FlatList
@@ -234,23 +116,21 @@ export default function Dialogs(props: any) {
         { text: 'Отмена', onPress: () => setShow(!show) },
         { text: 'Покинуть беседу', color: 'red', onPress: () => setShow(!show) }
       ]} />
-  </ScrollView>
+  </View>
 }
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: Colors.background
+    backgroundColor: Colors.background,
+    flex: 1,
   },
   container: {
-    paddingTop: 15,
-    paddingBottom: 40,
-    flex: 1,
+    paddingBottom: 60,
   },
   content: {
     paddingHorizontal: 15,
   },
   header: {
-    backgroundColor: '#C697FF',
     paddingTop: 70,
     elevation: 3,
   },

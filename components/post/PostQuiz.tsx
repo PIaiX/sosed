@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 
-export default function PostQuiz(props: any) {
+export default memo(function PostQuiz(props: any) {
   const { item } = props;
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function PostQuiz(props: any) {
     </View>
     <PostFooter item={item} />
   </View>
-}
+});
 
 const styles = StyleSheet.create({
   container: {

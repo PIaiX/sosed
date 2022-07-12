@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../Button';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
-export default function PostAd(props: any) {
+export default memo(function PostAd(props: any) {
+  const navigation: any = useNavigation();
   const { item } = props;
 
   return <View style={styles.container}>
@@ -21,7 +23,7 @@ export default function PostAd(props: any) {
           </View>
           <View style={styles.adHeaderRight}>
             <Text style={styles.adHeaderRightTitle}>{item.adTitle}</Text>
-            <Button title="Оставить заявку" icon="arrow-forward-outline" iconSize={20} />
+            <Button title="Оставить заявку" icon="arrow-forward-outline" onPress={() => navigation.navigate('PostAdScreen', item)} iconSize={20} />
           </View>
         </View>
         <View style={styles.adContent}>
@@ -45,7 +47,7 @@ export default function PostAd(props: any) {
     </View>
     <PostFooter item={item} />
   </View>
-}
+});
 
 const styles = StyleSheet.create({
   container: {

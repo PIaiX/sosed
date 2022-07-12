@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 
-export default function PostDefault(props: any) {
+export default memo(function PostDefault(props: any) {
   const { item } = props;
 
   return <View style={styles.container}>
@@ -14,7 +14,7 @@ export default function PostDefault(props: any) {
     </View>
     <PostFooter item={item} />
   </View>
-}
+});
 
 const styles = StyleSheet.create({
   container: {
