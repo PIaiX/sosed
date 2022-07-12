@@ -7,6 +7,7 @@ import PostHeader from './PostHeader';
 import Colors from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TextBold } from '../../components/Themed';
+import PostContent from './PostContent';
 
 export default memo(function PostAd(props: any) {
   const navigation: any = useNavigation();
@@ -15,8 +16,7 @@ export default memo(function PostAd(props: any) {
   return <View style={styles.container}>
     <PostHeader item={item} />
     <View style={styles.content}>
-      {item.text && item.text.length > 0 && <View><Text style={styles.text}>{item.text}</Text></View>}
-      {item.media && <View><Image style={styles.media} source={item.media} /></View>}
+      <PostContent item={item} />
       <View style={styles.ad}>
         <View style={styles.adHeader}>
           <View>

@@ -5,6 +5,7 @@ import PostHeader from './PostHeader';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { Text, TextBold } from '../../components/Themed';
+import PostContent from './PostContent';
 
 export default memo(function PostQuiz(props: any) {
   const { item } = props;
@@ -17,8 +18,7 @@ export default memo(function PostQuiz(props: any) {
   return <View style={styles.container}>
     <PostHeader item={item} />
     <View style={styles.content}>
-      {item.text && item.text.length > 0 && <View><Text style={styles.text}>{item.text}</Text></View>}
-      {item.media && <View><Image style={styles.media} source={item.media} /></View>}
+      <PostContent item={item} />
       <View style={styles.quiz}>
         <TextBold style={styles.quizTitle}>{item.quizTitle}</TextBold>
         <View style={styles.row}>

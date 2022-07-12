@@ -15,7 +15,7 @@ import { Text, TextBold } from '../components/Themed';
 const { width, height } = Dimensions.get('window')
 
 export default function Home(props: any) {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
 
   const [show, setShow] = useState(true);
 
@@ -156,7 +156,7 @@ export default function Home(props: any) {
         </ImageBackground>
       </View>
     });
-  }, [])
+  }, [category])
 
   const itemPoint = ({ item }) => {
     return <TouchableOpacity activeOpacity={0.8} style={styles.point}>
