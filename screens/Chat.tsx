@@ -97,10 +97,7 @@ export default function Chat({ route }: any) {
         <View>
           <Text style={{ fontSize: 16, color: 'white' }}>{dialogs.user.firstName && dialogs.user.lastName ? dialogs.user.firstName + ' ' + dialogs.user.lastName : dialogs.user.nickname}</Text>
         </View>
-      </View>,
-      headerRight: () => <TouchableOpacity activeOpacity={0.7} onPress={() => setShowHeaderMenu(!showHeaderMenu)}>
-        <Ionicons name="settings-outline" size={22} color='white' />
-      </TouchableOpacity>
+      </View>
     });
   }, [])
 
@@ -117,7 +114,7 @@ export default function Chat({ route }: any) {
         </View>
           :
           <TouchableOpacity activeOpacity={0.7} onPress={() => setShowHeaderMenu(!showHeaderMenu)}>
-            <Ionicons name="ellipsis-vertical" size={22} color='white' />
+            <Ionicons name="settings-outline" size={22} color='white' />
           </TouchableOpacity>
       }
     });

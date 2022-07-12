@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    paddingTop: 10,
     paddingBottom: 60,
   },
   content: {
