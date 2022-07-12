@@ -1,8 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, TouchableOpacity, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import React, { memo } from 'react';
+import { Text } from './Themed';
 
 export default memo(function Button(props: any) {
       const { onPress, title = 'Save', type, size, icon, iconSize, iconColor, disabled = false, loading = false, children } = props;
@@ -51,7 +52,7 @@ export default memo(function Button(props: any) {
                   color: '#fff'
             },
             text: {
-                  fontSize: 16,
+                  fontSize: 17,
                   lineHeight: 21,
                   letterSpacing: 0.25,
                   color: 'white',
@@ -69,7 +70,7 @@ export default memo(function Button(props: any) {
                   paddingHorizontal: 10,
             },
             sizeMiniText: {
-                  fontSize: 13,
+                  fontSize: 14,
             }
       });
 

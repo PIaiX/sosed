@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View, Modal, Pressable } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Modal, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import React, { memo } from 'react';
-import { BlurView } from 'expo-blur';
+import { Text, TextBold } from './Themed';
 
 export default memo(function DialogModal(props: any) {
       const { title, text, buttons, show, setShow, children, close } = props;
@@ -65,12 +65,13 @@ export default memo(function DialogModal(props: any) {
                   <View style={styles.dialogModal}>
                         <View style={styles.dialogContent}>
                               {close && <TouchableOpacity style={styles.close} onPress={() => setShow(!show)}><Ionicons name="close" size={25} color="#999" /></TouchableOpacity>}
-                              {text && text.length > 0 ? <Text style={{ fontSize: 16 }}>{text}</Text> : null}
+                              {title && title.length > 0 ? <TextBold style={{ fontSize: 22 }}>{text}</TextBold> : null}
+                              {text && text.length > 0 ? <Text style={{ fontSize: 17 }}>{text}</Text> : null}
                               {children ? children : null}
                         </View>
                         <View style={styles.dialogFooter}>
                               {
-                                    buttons && buttons.map((item: any) => <TouchableOpacity style={styles.dialogFooterItem} onPress={() => item.onPress()}><Text style={{ color: item.color ? item.color : Colors.activeText, fontWeight: 'bold', fontSize: 16 }}>{item.text}</Text></TouchableOpacity>)
+                                    buttons && buttons.map((item: any) => <TouchableOpacity style={styles.dialogFooterItem} onPress={() => item.onPress()}><TextBold style={{ fontSize: 18, color: item.color ? item.color : Colors.activeText }}>{item.text}</TextBold></TouchableOpacity>)
                               }
                         </View>
                   </View>

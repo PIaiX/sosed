@@ -1,8 +1,9 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import { Text } from '../../components/Themed';
 
 export default memo(function PostFooter(props: any) {
   const { item } = props;

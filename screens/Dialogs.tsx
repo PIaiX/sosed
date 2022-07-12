@@ -1,18 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, Image, TextInput, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
-import Button from '../components/Button';
-import PostDefault from '../components/post/PostDefault';
-import PostAd from '../components/post/PostAd';
-import PostQuiz from '../components/post/PostQuiz';
 import DialogModal from '../components/DialogModal';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
-
-const { width, height } = Dimensions.get('window')
+import { FlatList } from 'react-native-gesture-handler';
+import { Text, TextBold } from '../components/Themed';
 
 export default function Dialogs(props: any) {
   const navigation: any = useNavigation();
@@ -27,6 +22,176 @@ export default function Dialogs(props: any) {
       newMessagesCount: 10,
       user: {
         id: 0,
+        statusOnline: true,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 1,
+      type: 'group',
+      newMessagesCount: 10,
+      user: {
+        statusOnline: true,
+        id: 1,
+        nickname: 'Чат соседей д4',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю2',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 2,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 3,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 4,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 5,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 6,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 7,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 8,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 9,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 10,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 11,
+      user: {
+        id: 0,
+        statusOnline: false,
+        firstName: 'Георгий',
+        lastName: 'Норий',
+        miniature: require('../assets/images/avatar.png')
+      },
+      lastMessage: {
+        text: 'Прости, опаздываю',
+        timeForUser: '23:49',
+      }
+    },
+    {
+      id: 12,
+      user: {
+        id: 0,
+        statusOnline: false,
         firstName: 'Георгий',
         lastName: 'Норий',
         miniature: require('../assets/images/avatar.png')
@@ -49,10 +214,27 @@ export default function Dialogs(props: any) {
       style={styles.itemBox}>
       <View style={styles.item}>
         <View>
-          <Image
-            source={item.user.miniature ? item.user.miniature : require('../assets/images/avatar.png')}
-            style={styles.dialogPhoto}
-          />
+          {
+            item.type == 'group' ?
+              <View style={styles.groupPhoto}>
+                <Image
+                  source={item.user.miniature ? item.user.miniature : require('../assets/images/avatar.png')}
+                  style={[styles.dialogPhoto, styles.dialogPhoto1]}
+                />
+                <Image
+                  source={item.user.miniature ? item.user.miniature : require('../assets/images/avatar.png')}
+                  style={[styles.dialogPhoto, styles.dialogPhoto2]}
+                />
+                {item.user.statusOnline && <View style={[styles.statusOnline, styles.statusOnlineGroup]} />}
+              </View>
+              : <>
+                <Image
+                  source={item.user.miniature ? item.user.miniature : require('../assets/images/avatar.png')}
+                  style={styles.dialogPhoto}
+                />
+                {item.user.statusOnline && <View style={styles.statusOnline} />}
+              </>
+          }
         </View>
         <View style={styles.borderBottom}>
           <View style={styles.dialogNameBox}>
@@ -72,7 +254,13 @@ export default function Dialogs(props: any) {
             }
             {item.newMessagesCount && item.newMessagesCount > 0 &&
               <View style={styles.dialogNameBoxRight}>
-                <Text style={styles.numNew}>{item.newMessagesCount}</Text>
+                <LinearGradient
+                  colors={[Colors.button.backgroundColor, Colors.button.backgroundColor2]}
+                  start={[0, 1]}
+                  end={[1, 0]}
+                  style={styles.numNew}>
+                  <TextBold style={styles.numNewText}>{item.newMessagesCount}</TextBold>
+                </LinearGradient>
               </View>
             }
           </View>
@@ -83,7 +271,7 @@ export default function Dialogs(props: any) {
 
   return <View style={styles.background}>
     <ImageBackground style={styles.header} source={require('../assets/images/background-header.png')} >
-      <Text style={styles.headerTitle}>Чаты</Text>
+      <TextBold style={styles.headerTitle}>Чаты</TextBold>
       <View style={styles.search}>
         <View style={styles.searchBox}>
           <Ionicons style={styles.searchIcon} name="search-outline" size={20} color="rgba(255,255,255,0.8)" />
@@ -94,8 +282,8 @@ export default function Dialogs(props: any) {
         </View>
       </View>
       <View style={styles.tabs}>
-        <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Важное</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Общие</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><TextBold style={styles.tabText}>Важное</TextBold></TouchableOpacity>
+        <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><TextBold style={styles.tabText}>Общие</TextBold></TouchableOpacity>
       </View>
     </ImageBackground>
     <View style={styles.container}>
@@ -125,10 +313,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingTop: 10,
     paddingBottom: 60,
   },
   content: {
+    paddingTop: 10,
     paddingHorizontal: 15,
   },
   header: {
@@ -138,7 +326,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     color: '#fff',
-    fontWeight: 'bold',
     textAlign: 'center',
     alignSelf: 'center'
   },
@@ -160,7 +347,6 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 16,
   },
   search: {
@@ -192,8 +378,6 @@ const styles = StyleSheet.create({
     top: 11
   },
 
-
-
   itemBox: {
     flex: 1,
     paddingVertical: 6,
@@ -222,20 +406,55 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   numNew: {
-    paddingVertical: 2,
+    paddingVertical: 5,
     paddingHorizontal: 7,
-    fontSize: 12,
-    color: '#fff',
     borderRadius: 20,
     backgroundColor: Colors.iconColor
+  },
+  numNewText: {
+    fontSize: 12,
+    color: '#fff',
+  },
+  groupPhoto: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  dialogPhoto1: {
+    width: 40,
+    top: -2,
+    height: 40
+  },
+  dialogPhoto2: {
+    marginLeft: -45,
+    right: -5,
+    top: 12,
+    width: 40,
+    height: 40
   },
   dialogPhoto: {
     width: 50,
     height: 50,
-    borderRadius: 15,
+    borderRadius: 50,
     resizeMode: 'cover',
     backgroundColor: Colors.background,
     marginRight: 15
+  },
+  statusOnline: {
+    width: 15,
+    height: 15,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: 'white',
+    backgroundColor: '#48E23B',
+    position: 'absolute',
+    zIndex: 9999,
+    bottom: -2,
+    right: 10,
+  },
+  statusOnlineGroup: {
+    bottom: -13,
+    right: 10,
   },
   borderBottom: {
     paddingBottom: 12,

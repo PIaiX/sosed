@@ -1,6 +1,7 @@
-import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React, { memo } from 'react';
 import Colors from '../constants/Colors';
+import { Text } from './Themed';
 
 export default memo(function Loading(props: any) {
 

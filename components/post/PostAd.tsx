@@ -1,11 +1,12 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../Button';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 import Colors from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { Text, TextBold } from '../../components/Themed';
 
 export default memo(function PostAd(props: any) {
   const navigation: any = useNavigation();
@@ -33,7 +34,7 @@ export default memo(function PostAd(props: any) {
               <Image source={item.image} style={[styles.adminImage, styles.adminImage2]} />
             </View>
             <View style={styles.adAdminText}>
-              <Text style={styles.bold}>Организаторы:</Text>
+              <TextBold>Организаторы:</TextBold>
               <Text>Джон майкл и Амина Герц</Text>
             </View>
           </View>
@@ -89,11 +90,7 @@ const styles = StyleSheet.create({
   },
   adHeaderRightTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
     marginBottom: 5
-  },
-  bold: {
-    fontWeight: 'bold'
   },
   adAdmin: {
     marginVertical: 10,

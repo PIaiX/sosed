@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, ImageBackground, Dimensions, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,6 +10,7 @@ import PostDefault from '../components/post/PostDefault';
 import PostAd from '../components/post/PostAd';
 import PostQuiz from '../components/post/PostQuiz';
 import DialogModal from '../components/DialogModal';
+import { Text, TextBold } from '../components/Themed';
 
 const { width, height } = Dimensions.get('window')
 
@@ -102,7 +103,7 @@ export default function Home(props: any) {
           checked: false
         },
         {
-          id: 2,
+          id: 3,
           text: 'Очень плохо',
           value: 0,
           procent: 0,
@@ -136,7 +137,25 @@ export default function Home(props: any) {
   ]);
 
   useEffect(() => {
-
+    return navigation.setOptions({
+      headerBackground: () => <View style={styles.header}>
+        <ImageBackground style={styles.headerBackground} source={require('../assets/images/background-header.png')}>
+          <View style={styles.headerContent}>
+            <View>
+              <Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} />
+            </View>
+            <View style={styles.tabs}>
+              <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Город</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Район</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => setCategory(2)} style={[styles.tab, category === 2 && styles.tabActive]}><Text style={styles.tabText}>Дом</Text></TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Dialogs')}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
+      </View>
+    });
   }, [])
 
   const itemPoint = ({ item }) => {
@@ -155,7 +174,7 @@ export default function Home(props: any) {
               <Ionicons name="arrow-forward-outline" size={20} color="white" />
             </View>
           </View>
-          <Text style={styles.pointTitle}>120</Text>
+          <TextBold style={styles.pointTitle}>120</TextBold>
           <Text style={styles.pointSubTitle}>Ваши баллы</Text>
         </View>
       </LinearGradient>
@@ -194,11 +213,6 @@ export default function Home(props: any) {
 
   return <ScrollView showsVerticalScrollIndicator={false} style={styles.background}>
     <ImageBackground source={require('../assets/images/background-header.png')} >
-      <View style={styles.tabs}>
-        <TouchableOpacity onPress={() => setCategory(0)} style={[styles.tab, category === 0 && styles.tabActive]}><Text style={styles.tabText}>Город</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setCategory(1)} style={[styles.tab, category === 1 && styles.tabActive]}><Text style={styles.tabText}>Район</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => setCategory(2)} style={[styles.tab, category === 2 && styles.tabActive]}><Text style={styles.tabText}>Дом</Text></TouchableOpacity>
-      </View>
       <View style={styles.content}>
         <View style={styles.filter}>
           <View>
@@ -251,11 +265,11 @@ export default function Home(props: any) {
       setShow={(e: boolean) => setShow(e)}
       buttons={[
         { text: 'ОК', onPress: () => setShow(!show) },
-        { text: '+120 быллов', onPress: () => setShow(!show) }
+        { text: '+120 баллов', onPress: () => setShow(!show) }
       ]}>
       <Image source={require('../assets/images/reg-point.png')} resizeMode="contain" style={{ height: 200, width: '70%', alignSelf: 'center' }} />
       <Text style={{ fontSize: 18 }}>
-        <Text style={{ color: Colors.activeText }}>Поздравляем!</Text>{'\n'}Вы прошли регистрацию и получили <Text style={{ color: Colors.activeText }}>120</Text> баллов!
+        <TextBold style={{ fontSize: 22, color: Colors.activeText }}>Поздравляем!</TextBold>{'\n'}Вы прошли регистрацию и получили <TextBold style={{ color: Colors.activeText }}>120</TextBold> баллов!
       </Text>
     </DialogModal>
   </ScrollView>
@@ -270,7 +284,22 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     flex: 1,
   },
+  headerContent: {
+    paddingTop: 40,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  header: {
+    height: 92,
+    overflow: 'hidden'
+  },
+  headerBackground: {
+    height: 410
+  },
   content: {
+    paddingTop: 100,
     paddingHorizontal: 15,
   },
   contentInfo: {
@@ -375,7 +404,6 @@ const styles = StyleSheet.create({
   pointTitle: {
     color: 'white',
     fontSize: 28,
-    fontWeight: 'bold',
     flex: 1,
     alignSelf: 'center',
     textAlign: 'center'

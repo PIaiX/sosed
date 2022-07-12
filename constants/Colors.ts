@@ -30,4 +30,6 @@ export default {
 
   bookmark: '#444',
   bookmarkActive: '#7A24E7',
+
+  sendInput: '#999'
 };

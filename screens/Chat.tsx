@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StyleSheet, TouchableOpacity, Image, ImageBackground, TextInput, Text, TouchableWithoutFeedback, Alert, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, ImageBackground, TextInput, TouchableWithoutFeedback, Alert, View } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/Loading';
 import OptionsMenu from '../components/OptionsMenu';
 import DialogModal from '../components/DialogModal';
+import { Text, TextBold } from '../components/Themed';
 
 export default function Chat({ route }: any) {
   const navigation = useNavigation();
@@ -31,7 +32,79 @@ export default function Chat({ route }: any) {
       user: {
         id: 1
       }
-    }
+    },
+    {
+      id: 2,
+      text: 'Все отлично! У тебя как?',
+      createdAt: '10:22',
+      user: {
+        id: 2
+      }
+    },
+    {
+      id: 3,
+      text: 'Все отлично! У тебя как? Все отлично! У тебя как? Все отлично! У тебя как? Все отлично! У тебя как?',
+      createdAt: '10:22',
+      user: {
+        id: 2
+      }
+    },
+    {
+      id: 4,
+      text: 'Все отлично! У тебя как? Все отлично! У тебя как? Все отлично! У тебя как? Все отлично! У тебя как?',
+      createdAt: '10:22',
+      user: {
+        id: 2
+      }
+    },
+    {
+      id: 5,
+      text: 'Все отлично! У тебя как? Все отлично! У тебя как? Все отлично! У тебя как?',
+      createdAt: '10:22',
+      user: {
+        id: 2
+      }
+    },
+    {
+      id: 6,
+      text: 'Привет как дела? Можно тебе предложить объявление?',
+      createdAt: '10:20',
+      user: {
+        id: 1
+      }
+    },
+    {
+      id: 7,
+      text: 'Привет как дела? Можно тебе предложить объявление? Привет как дела? Можно тебе предложить объявление? Привет как дела? Можно тебе предложить объявление?',
+      createdAt: '10:20',
+      user: {
+        id: 1
+      }
+    },
+    {
+      id: 8,
+      text: 'Привет как дела? Можно тебе предложить объявление?',
+      createdAt: '10:20',
+      user: {
+        id: 1
+      }
+    },
+    {
+      id: 9,
+      text: 'Привет как дела? Можно тебе предложить объявление?',
+      createdAt: '10:20',
+      user: {
+        id: 1
+      }
+    },
+    {
+      id: 10,
+      text: 'Привет как дела? Можно тебе предложить объявление?',
+      createdAt: '10:20',
+      user: {
+        id: 1
+      }
+    },
   ]);
   const [newData, setNewData] = useState<any>(false);
   const [height, setHeight] = useState(40);
@@ -88,11 +161,29 @@ export default function Chat({ route }: any) {
     return navigation.setOptions({
       headerTitle: () => <View style={{ marginLeft: -10, flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center' }}>
         <View>
-          <Image
-            source={dialogs.user.miniature ? dialogs.user.miniature : require('../assets/images/no-image.png')}
-            resizeMode="contain"
-            style={{ width: 35, height: 35, borderRadius: 10, marginRight: 12 }}
-          />
+          {
+            dialogs.type == 'group' ?
+
+              <View style={styles.groupPhoto}>
+                <Image
+                  source={dialogs.user.miniature ? dialogs.user.miniature : require('../assets/images/no-image.png')}
+                  style={[styles.dialogPhoto, styles.dialogPhoto1]}
+                />
+                <Image
+                  source={dialogs.user.miniature ? dialogs.user.miniature : require('../assets/images/no-image.png')}
+                  style={[styles.dialogPhoto, styles.dialogPhoto2]}
+                />
+                {dialogs.user.statusOnline && <View style={[styles.statusOnline, styles.statusOnlineGroup]} />}
+              </View>
+              :
+              <>
+                <Image
+                  source={dialogs.user.miniature ? dialogs.user.miniature : require('../assets/images/no-image.png')}
+                  style={styles.dialogPhoto}
+                />
+                {dialogs.user.statusOnline && <View style={styles.statusOnline} />}
+              </>
+          }
         </View>
         <View>
           <Text style={{ fontSize: 16, color: 'white' }}>{dialogs.user.firstName && dialogs.user.lastName ? dialogs.user.firstName + ' ' + dialogs.user.lastName : dialogs.user.nickname}</Text>
@@ -226,6 +317,14 @@ export default function Chat({ route }: any) {
         <TouchableWithoutFeedback delayLongPress={400} onLongPress={() => selectMessage(item)} onPress={() => selectedMessages && selectedMessages.length > 0 ? selectMessage(item) : setItemMenu({ status: true, item })}>
           <View style={styles.messageContainer}>
             {selectedMessages && selectedMessages.length > 0 ? <View style={styles.messageSelect}><Ionicons size={28} name={getSelectedMessage(item) ? "checkmark-circle" : "radio-button-off-outline"} color={Colors.activeText} /></View> : <View></View>}
+            {
+              dialogs.type == 'group' && <View>
+                <Image
+                  source={dialogs.user.miniature ? dialogs.user.miniature : require('../assets/images/no-image.png')}
+                  style={styles.messageUserPhoto}
+                />
+              </View>
+            }
             <View style={styles.message}>
               {/* <View style={styles.messageAnswer}>
             <Text style={styles.messageAnswerName} numberOfLines={1}>tasdgasd</Text>
@@ -258,10 +357,15 @@ export default function Chat({ route }: any) {
     },
     messageContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-end',
+    },
+    messageUserPhoto: {
+      width: 35,
+      height: 35,
+      borderRadius: 40,
+      marginHorizontal: 10,
     },
     messageSelect: {
-      top: 5,
       paddingRight: 15
     },
     image: {
@@ -295,14 +399,14 @@ export default function Chat({ route }: any) {
     },
     messageMeText: {
       color: '#fff',
-      fontSize: 15,
+      fontSize: 17,
     },
     messageText: {
       color: Colors.text,
-      fontSize: 15,
+      fontSize: 17,
     },
     dateMe: {
-      fontSize: 10,
+      fontSize: 13,
       color: '#f9f9f9',
       marginLeft: 'auto',
       paddingLeft: 5,
@@ -312,7 +416,7 @@ export default function Chat({ route }: any) {
       justifyContent: 'flex-end',
     },
     date: {
-      fontSize: 10,
+      fontSize: 13,
       color: '#999',
       marginLeft: 'auto',
       paddingLeft: 5,
@@ -330,7 +434,6 @@ export default function Chat({ route }: any) {
     },
     messageMeAnswerName: {
       color: '#fff',
-      fontWeight: 'bold'
     },
     messageMeAnswerText: {
       color: '#fff',
@@ -343,7 +446,6 @@ export default function Chat({ route }: any) {
       marginBottom: 5
     },
     messageAnswerName: {
-      fontWeight: 'bold',
       color: Colors.activeText
     },
     send: {
@@ -359,7 +461,8 @@ export default function Chat({ route }: any) {
     boxButton: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingRight: 10
+      position: 'absolute',
+      right: 30
     },
     boxGallery: {
       justifyContent: 'center',
@@ -380,6 +483,7 @@ export default function Chat({ route }: any) {
       justifyContent: "flex-start",
       paddingHorizontal: 15,
       paddingVertical: 10,
+      paddingRight: 40,
       fontSize: 15,
       color: Colors.text,
     },
@@ -447,7 +551,6 @@ export default function Chat({ route }: any) {
       textAlign: 'center'
     },
     emptyTextBold: {
-      fontWeight: 'bold',
       fontSize: 17,
       alignSelf: 'center',
       textAlign: 'center'
@@ -458,7 +561,49 @@ export default function Chat({ route }: any) {
       paddingHorizontal: 12,
       backgroundColor: 'rgba(255,255,255,0.8)',
       borderRadius: 20
-    }
+    },
+    groupPhoto: {
+      position: 'relative',
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    dialogPhoto1: {
+      width: 30,
+      top: -2,
+      height: 30
+    },
+    dialogPhoto2: {
+      marginLeft: -40,
+      right: -5,
+      top: 5,
+      width: 30,
+      height: 30
+    },
+    dialogPhoto: {
+      width: 35,
+      height: 35,
+      borderRadius: 45,
+      resizeMode: 'cover',
+      backgroundColor: Colors.background,
+      marginRight: 15,
+      marginLeft: 15,
+    },
+    statusOnline: {
+      width: 10,
+      height: 10,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: 'white',
+      backgroundColor: '#48E23B',
+      position: 'absolute',
+      zIndex: 9999,
+      bottom: -2,
+      right: 12,
+    },
+    statusOnlineGroup: {
+      bottom: -6,
+      right: 12,
+    },
   });
 
   return (
@@ -470,7 +615,7 @@ export default function Chat({ route }: any) {
             <Loading background="transparent" loading={loading} />
             :
             !data || data.length <= 0 && <View style={styles.emptyBox}>
-              <Text style={styles.emptyTextBold}>Сообщений пока нет...</Text>
+              <TextBold style={styles.emptyTextBold}>Сообщений пока нет...</TextBold>
               <Text style={styles.emptyText}>Отправьте приветственное сообщение</Text>
               <TouchableOpacity activeOpacity={0.8} style={styles.emptyBtn} onPress={() => sendMessage(selectMessageText)}><Text>{selectMessageText}</Text></TouchableOpacity>
             </View>
@@ -491,7 +636,7 @@ export default function Chat({ route }: any) {
         <View style={styles.send}>
           <View style={styles.boxGallery}>
             <TouchableOpacity>
-              <Ionicons name="image-outline" size={24} color={Colors.text} />
+              <Feather name="paperclip" size={24} color={Colors.sendInput} />
             </TouchableOpacity>
           </View>
           <View style={styles.boxInput}>
@@ -513,7 +658,7 @@ export default function Chat({ route }: any) {
             text.length > 0 &&
             <View style={styles.boxButton}>
               <TouchableOpacity onPress={() => sendMessage(text)}>
-                <Ionicons size={25} name="send" color={Colors.activeText} />
+                <Ionicons size={22} name="send" color={Colors.sendInput} />
               </TouchableOpacity>
             </View>
           }

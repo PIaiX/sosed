@@ -36,10 +36,9 @@ function RootNavigator() {
         }}>
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{
           title: '',
-          headerBackground: () => <ImageBackground style={{ height: 415, width: '100%' }} source={require('../assets/images/background-header.png')} />,
+          headerTransparent: true,
+          headerShown: false,
           headerShadowVisible: false,
-          headerLeft: () => <View><Image fadeDuration={0} style={{ width: 28 }} resizeMode="contain" source={require('../assets/images/menu.png')} /></View>,
-          headerRight: () => <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Dialogs')}><Image fadeDuration={0} style={{ width: 30 }} resizeMode="contain" source={require('../assets/images/dialogs.png')} /></TouchableOpacity>,
         }} />
         <Stack.Screen name="Dialogs" component={Dialogs} options={{
           title: '',
@@ -76,7 +75,7 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarIconStyle: { marginTop: 4 },
-        tabBarLabelStyle: { fontSize: 12, color: '#999', paddingBottom: 3 },
+        tabBarLabelStyle: { fontSize: 14, color: '#999', fontFamily: 'calibri', paddingBottom: 3 },
         tabBarStyle: { height: 55, position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 4, borderTopWidth: 0 },
         unmountOnBlur: true,
         tabBarShowLabel: true,
@@ -102,8 +101,8 @@ function BottomTabNavigator() {
         name="Home2"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Сервисы',
-          headerShadowVisible: false,
+          title: '',
+          tabBarLabel: 'Сервисы',
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
               require('../assets/images/service-active.png')
@@ -115,8 +114,7 @@ function BottomTabNavigator() {
         name="Home3"
         component={Home}
         options={({ navigation }) => ({
-          title: 'Добавить',
-          headerShadowVisible: false,
+          title: '',
           tabBarLabel: '',
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={require('../assets/images/add.png')} style={{ bottom: 5, width: 55, height: 55 }} resizeMode="contain" />,
         })}
@@ -126,7 +124,7 @@ function BottomTabNavigator() {
         component={Home}
         options={({ navigation }) => ({
           title: 'Бонусы',
-          headerShadowVisible: false,
+          tabBarLabel: 'Бонусы',
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
               require('../assets/images/points-active.png')
@@ -139,7 +137,7 @@ function BottomTabNavigator() {
         component={Home}
         options={({ navigation }) => ({
           title: 'Карта',
-          headerShadowVisible: false,
+          tabBarLabel: 'Карта',
           tabBarIcon: ({ focused, color }) => <Image fadeDuration={0} source={
             focused ?
               require('../assets/images/map-active.png')

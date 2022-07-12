@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import Button from '../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Text, TextBold } from '../../components/Themed';
 
 const { width, height } = Dimensions.get('window')
 
@@ -12,6 +13,7 @@ export default function PostAdScreen(props: any) {
   const { route } = props;
   const item = route.params;
   const [selected, setSelected] = useState(0);
+
   useEffect(() => {
 
   }, [])
@@ -21,7 +23,7 @@ export default function PostAdScreen(props: any) {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
         <Text style={styles.title}>Заявка на мероприятия</Text>
-        <Text style={styles.adTitle}>{item.adTitle}</Text>
+        <TextBold style={styles.adTitle}>{item.adTitle}</TextBold>
         <Image style={styles.adImage} source={require('../../assets/images/image-ad-full.png')} />
         <TouchableOpacity style={[styles.ad, selected === 0 && styles.adActive]} activeOpacity={0.8} onPress={() => setSelected(0)}>
           <View style={styles.adHeader}>
@@ -122,11 +124,7 @@ const styles = StyleSheet.create({
   },
   adTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 15
-  },
-  bold: {
-    fontWeight: 'bold'
   },
   adAdmin: {
     marginVertical: 10,

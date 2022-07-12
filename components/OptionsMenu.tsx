@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, Image, Modal, Pressable, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, Modal, Pressable, View } from 'react-native';
 import Colors from '../constants/Colors';
-import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5, SimpleLineIcons } from '@expo/vector-icons';
+import { Text } from './Themed';
 
 export default function OptionsMenu(props: any) {
     const { data } = props;
@@ -43,7 +44,7 @@ export default function OptionsMenu(props: any) {
             backgroundColor: 'transparent',
         },
         linkText: {
-            fontSize: 16,
+            fontSize: 17,
         },
         deleteText: {
             color: '#f93a54'
@@ -83,13 +84,20 @@ export default function OptionsMenu(props: any) {
                                                 styles.activeText
                                                 : null
                                         ]} />
-                                        :
-                                        <Ionicons name={item.icon} size={22} style={[styles.icon, item.type && item.type == 'delete' ?
-                                            styles.deleteText
-                                            : item.type && item.type == 'active' ?
-                                                styles.activeText
-                                                : null
-                                        ]} />
+                                        : item.typeIcon == 'SimpleLineIcons' ?
+                                            <SimpleLineIcons name={item.icon} size={22} style={[styles.icon, item.type && item.type == 'delete' ?
+                                                styles.deleteText
+                                                : item.type && item.type == 'active' ?
+                                                    styles.activeText
+                                                    : null
+                                            ]} />
+                                            :
+                                            <Ionicons name={item.icon} size={22} style={[styles.icon, item.type && item.type == 'delete' ?
+                                                styles.deleteText
+                                                : item.type && item.type == 'active' ?
+                                                    styles.activeText
+                                                    : null
+                                            ]} />
                                     : null
                             }
                             <Text style={[styles.linkText, props.theme ? styles.linkTextMini : null, item.type && item.type == 'delete' ?

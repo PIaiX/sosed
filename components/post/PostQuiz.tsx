@@ -1,12 +1,14 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import { Text, TextBold } from '../../components/Themed';
 
 export default memo(function PostQuiz(props: any) {
   const { item } = props;
+  const [selected, setSelected] = useState<any>(false);
 
   useEffect(() => {
 
@@ -18,7 +20,7 @@ export default memo(function PostQuiz(props: any) {
       {item.text && item.text.length > 0 && <View><Text style={styles.text}>{item.text}</Text></View>}
       {item.media && <View><Image style={styles.media} source={item.media} /></View>}
       <View style={styles.quiz}>
-        <Text style={styles.quizTitle}>{item.quizTitle}</Text>
+        <TextBold style={styles.quizTitle}>{item.quizTitle}</TextBold>
         <View style={styles.row}>
           <View>
             <Text style={styles.quizType}>Публичный опрос</Text>
@@ -29,19 +31,23 @@ export default memo(function PostQuiz(props: any) {
         </View>
         <View style={styles.quizList}>
           {
-            item.quizList && item.quizList.map(quiz => <View style={styles.quizListItem}>
-              <View style={[styles.quizListItemProgress, { width: quiz.procent + '%' }]} />
-              <View style={styles.quizListItemRadio}>
-                <Ionicons name={quiz.checked ? "radio-button-on-outline" : "ellipse-outline"} size={22} color="#7A24E7" />
-              </View>
+            item.quizList && item.quizList.map((quiz: any) => <TouchableOpacity activeOpacity={0.8} onPress={() => setSelected(quiz)} style={styles.quizListItem}>
+              <View style={[styles.quizListItemProgress, { width: selected ? quiz.procent + '%' : '0%' }]} />
+              {
+                selected && <View style={styles.quizListItemRadio}>
+                  <Ionicons name={selected.id == quiz.id ? "radio-button-on-outline" : "ellipse-outline"} size={22} color="#7A24E7" />
+                </View>
+              }
               <View>
                 <Text style={styles.quizListItemText}>{quiz.text}</Text>
               </View>
-              <View style={styles.quizListItemProcent}><Text style={styles.quizListItemProcentText}>{quiz.procent + '%'}</Text></View>
-            </View>)
+              {
+                selected && <View style={styles.quizListItemProcent}><Text style={styles.quizListItemProcentText}>{quiz.procent + '%'}</Text></View>
+              }
+            </TouchableOpacity>)
           }
         </View>
-        <Text style={styles.quizType}>Проголосовало 4 человека</Text>
+        <Text style={styles.quizType}>Проголосовало 422 человека</Text>
       </View>
     </View>
     <PostFooter item={item} />
@@ -77,8 +83,7 @@ const styles = StyleSheet.create({
     padding: 12
   },
   quizTitle: {
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 17,
     marginBottom: 5
   },
   quizType: {
@@ -98,7 +103,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 6,
-    padding: 8,
+    paddingHorizontal: 10,
+    minHeight: 42,
     paddingRight: 40,
     marginBottom: 8
   },
@@ -115,12 +121,12 @@ const styles = StyleSheet.create({
   },
   quizListItemProcentText: {
     color: '#999',
-    fontSize: 13
+    fontSize: 14
   },
   quizListItemRadio: {
     marginRight: 10
   },
   quizListItemText: {
-    fontSize: 13
+    fontSize: 15
   }
 });

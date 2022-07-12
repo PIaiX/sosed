@@ -1,7 +1,8 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
+import { Text } from '../../components/Themed';
 
 export default memo(function PostDefault(props: any) {
   const { item } = props;

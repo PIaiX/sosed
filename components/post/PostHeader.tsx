@@ -1,9 +1,10 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, Image, Modal, TouchableOpacity, Pressable } from 'react-native';
+import { View, Image, Modal, TouchableOpacity, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import OptionsMenu from '../OptionsMenu';
+import { Text, TextBold } from '../../components/Themed';
 
 export default memo(function PostHeader(props: any) {
   const { item } = props;
@@ -11,7 +12,7 @@ export default memo(function PostHeader(props: any) {
   var options = [];
   if (item.type == 2) {
     options = [
-      { title: 'Отменить голос', type: 'active', icon: 'close-circle-outline', onOptionPress: () => console.log('тест') },
+      { title: 'Отменить голос', type: 'active', icon: 'ban', typeIcon: 'SimpleLineIcons', onOptionPress: () => console.log('тест') },
       { title: 'Скопировать ссылку', icon: 'copy-outline', onOptionPress: () => console.log('тест') },
       { title: 'Скрыть публикацию', icon: 'eye-off-outline' },
       { title: 'Пожаловаться', type: 'delete', icon: 'alert-circle-outline', onPress: '' }
@@ -31,7 +32,7 @@ export default memo(function PostHeader(props: any) {
       </View>
       <View style={styles.headerCenter}>
         <View>
-          <Text style={styles.name}>{item.name}</Text>
+          <TextBold style={styles.name}>{item.name}</TextBold>
           <Text style={styles.subText}><Ionicons name="location-outline" color={Colors.iconColor} /> {item.city}</Text>
           <Text style={styles.subText}>{item.date}</Text>
         </View>
@@ -73,17 +74,16 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   name: {
-    fontSize: 15,
-    fontWeight: 'bold'
+    fontSize: 16,
   },
   subText: {
     color: '#999',
-    fontSize: 12
+    fontSize: 14
   },
   subCategory: {
     color: Colors.activeText,
     marginTop: 5,
-    fontSize: 13
+    fontSize: 14
   },
   avatarImage: {
     width: 45,
