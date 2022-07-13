@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Image, TextInput, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, TextInput, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import DialogModal from '../components/DialogModal';
-import { FlatList } from 'react-native-gesture-handler';
 import { Text, TextBold } from '../components/Themed';
 
 export default function Dialogs(props: any) {

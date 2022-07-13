@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StyleSheet, TouchableOpacity, Image, ImageBackground, TextInput, TouchableWithoutFeedback, Alert, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, FlatList, Image, ImageBackground, TextInput, TouchableWithoutFeedback, Alert, View } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -606,75 +605,73 @@ export default function Chat({ route }: any) {
     },
   });
 
-  return (
-    <GestureHandlerRootView style={styles.container} >
-      <View style={styles.image} >
-        <ImageBackground source={require('../assets/images/background-header.png')} style={{ height: 90 }} />
+  return <View style={styles.container} >
+    <View style={styles.image} >
+      <ImageBackground source={require('../assets/images/background-header.png')} style={{ height: 90 }} />
+      {
+        loading ?
+          <Loading background="transparent" loading={loading} />
+          :
+          !data || data.length <= 0 && <View style={styles.emptyBox}>
+            <TextBold style={styles.emptyTextBold}>Сообщений пока нет...</TextBold>
+            <Text style={styles.emptyText}>Отправьте приветственное сообщение</Text>
+            <TouchableOpacity activeOpacity={0.8} style={styles.emptyBtn} onPress={() => sendMessage(selectMessageText)}><Text>{selectMessageText}</Text></TouchableOpacity>
+          </View>
+      }
+      <FlatList
+        inverted
+        data={data}
+        extraData={update}
+        renderItem={Item}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={12}
+        initialNumToRender={20}
+      />
+      <View style={styles.send}>
+        <View style={styles.boxGallery}>
+          <TouchableOpacity>
+            <Feather name="paperclip" size={24} color={Colors.sendInput} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.boxInput}>
+          <TextInput
+            ref={inputRef}
+            style={[styles.input, { height: height <= 100 ? height : 100 }]}
+            placeholder="Написать сообщение"
+            autoCapitalize="none"
+            multiline={true}
+            editable
+            maxLength={1500}
+            onChangeText={(text) => setText(text)}
+            onContentSizeChange={(event) => setHeight(event.nativeEvent.contentSize.height)}
+            value={text}
+            placeholderTextColor='#999'
+          />
+        </View>
         {
-          loading ?
-            <Loading background="transparent" loading={loading} />
-            :
-            !data || data.length <= 0 && <View style={styles.emptyBox}>
-              <TextBold style={styles.emptyTextBold}>Сообщений пока нет...</TextBold>
-              <Text style={styles.emptyText}>Отправьте приветственное сообщение</Text>
-              <TouchableOpacity activeOpacity={0.8} style={styles.emptyBtn} onPress={() => sendMessage(selectMessageText)}><Text>{selectMessageText}</Text></TouchableOpacity>
-            </View>
-        }
-        <FlatList
-          inverted
-          data={data}
-          extraData={update}
-          renderItem={Item}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={styles.content}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          removeClippedSubviews={true}
-          maxToRenderPerBatch={12}
-          initialNumToRender={20}
-        />
-        <View style={styles.send}>
-          <View style={styles.boxGallery}>
-            <TouchableOpacity>
-              <Feather name="paperclip" size={24} color={Colors.sendInput} />
+          text.length > 0 &&
+          <View style={styles.boxButton}>
+            <TouchableOpacity onPress={() => sendMessage(text)}>
+              <Ionicons size={22} name="send" color={Colors.sendInput} />
             </TouchableOpacity>
           </View>
-          <View style={styles.boxInput}>
-            <TextInput
-              ref={inputRef}
-              style={[styles.input, { height: height <= 100 ? height : 100 }]}
-              placeholder="Написать сообщение"
-              autoCapitalize="none"
-              multiline={true}
-              editable
-              maxLength={1500}
-              onChangeText={(text) => setText(text)}
-              onContentSizeChange={(event) => setHeight(event.nativeEvent.contentSize.height)}
-              value={text}
-              placeholderTextColor='#999'
-            />
-          </View>
-          {
-            text.length > 0 &&
-            <View style={styles.boxButton}>
-              <TouchableOpacity onPress={() => sendMessage(text)}>
-                <Ionicons size={22} name="send" color={Colors.sendInput} />
-              </TouchableOpacity>
-            </View>
-          }
-        </View>
+        }
       </View>
-      <OptionsMenu show={itemMenu.status} type="top" data={itemMenuOptionsMe} onClose={(item: any) => setItemMenu({ status: false, item })} />
-      {/* <OptionsMenu show={showHeaderMenu} position="top-right" theme="mini" data={optionsHeader} onClose={() => setShowHeaderMenu(!showHeaderMenu)} /> */}
+    </View>
+    <OptionsMenu show={itemMenu.status} type="top" data={itemMenuOptionsMe} onClose={(item: any) => setItemMenu({ status: false, item })} />
+    {/* <OptionsMenu show={showHeaderMenu} position="top-right" theme="mini" data={optionsHeader} onClose={() => setShowHeaderMenu(!showHeaderMenu)} /> */}
 
-      <DialogModal
-        show={showHeaderMenu}
-        setShow={(e: boolean) => setShowHeaderMenu(!showHeaderMenu)}
-        text="Вы не можете писать сообщение в общедомовой чат, пока вы не подтвердите свой дом"
-        buttons={[
-          { text: 'Назад', onPress: () => setShowHeaderMenu(!showHeaderMenu) },
-          { text: 'Подтвердить дом', onPress: () => setShowHeaderMenu(!showHeaderMenu) }
-        ]} />
-    </GestureHandlerRootView >
-  );
+    <DialogModal
+      show={showHeaderMenu}
+      setShow={(e: boolean) => setShowHeaderMenu(!showHeaderMenu)}
+      text="Вы не можете писать сообщение в общедомовой чат, пока вы не подтвердите свой дом"
+      buttons={[
+        { text: 'Назад', onPress: () => setShowHeaderMenu(!showHeaderMenu) },
+        { text: 'Подтвердить дом', onPress: () => setShowHeaderMenu(!showHeaderMenu) }
+      ]} />
+  </View>
 }

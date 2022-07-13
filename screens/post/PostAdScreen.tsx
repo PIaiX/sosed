@@ -6,10 +6,12 @@ import Colors from '../../constants/Colors';
 import Button from '../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text, TextBold } from '../../components/Themed';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window')
 
 export default function PostAdScreen(props: any) {
+  const navigation: any = useNavigation();
   const { route } = props;
   const item = route.params;
   const [selected, setSelected] = useState(0);
@@ -58,7 +60,7 @@ export default function PostAdScreen(props: any) {
       </View>
     </ScrollView>
     <View style={styles.contentFooter}>
-      <Button type="big" title="Отправить заявку" />
+      <Button type="big" title="Отправить заявку" onPress={() => navigation.goBack()} />
     </View>
   </View>
 }
